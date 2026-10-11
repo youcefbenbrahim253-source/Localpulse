@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOCALPULSE DIGITAL | Agence de Contenu Viral & IA</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        gray: { 850: '#1f2937', 900: '#111827', 950: '#030712' }
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20zM20 0h20v20H20V0z' fill='%23ffffff' fill-opacity='0.02' fill-rule='evenodd'/%3E%3C/svg%3E\")",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #030712; color: #ffffff; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #111827; }
+        ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 4px; }
+        .neon-glow { box-shadow: 0 0 15px rgba(139, 92, 246, 0.4); }
+        .neon-glow:hover { box-shadow: 0 0 25px rgba(139, 92, 246, 0.7); }
+        .text-gradient {
+            background: linear-gradient(to right, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @keyframes slideInUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .toast-animate { animation: slideInUp 0.3s ease-out forwards; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col relative bg-grid-pattern">
+
+    <!-- HEADER -->
+    <header class="fixed w-full top-0 z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
+        <div class="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
+            <a href="#" onclick="showMainView()" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center neon-glow">
+                    <i class="fa-solid fa-bolt text-white text-xl group-hover:scale-110 transition-transform"></i>
+                </div>
+                <span class="text-2xl font-black tracking-tighter text-white">LOCAL<span class="text-gradient">PULSE</span></span>
+            </a>
+
+            <div class="flex items-center gap-4">
+                <div class="hidden lg:flex items-center gap-3 mr-2 text-gray-400">
+                    <a href="https://instagram.com/localpulse33" target="_blank" class="hover:text-pink-400 transition-colors"><i class="fa-brands fa-instagram text-lg"></i></a>
+                    <a href="https://tiktok.com/@localpulse33" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-tiktok text-lg"></i></a>
+                </div>
+                <button onclick="toggleAdminView()" class="text-gray-400 hover:text-white text-sm font-medium transition-colors hidden sm:flex items-center gap-1.5">
+                    <i class="fa-solid fa-shield-halved text-purple-400"></i> Admin
+                </button>
+                <button onclick="toggleAuthModal()" id="auth-nav-btn" class="bg-gray-900 border border-gray-700 hover:border-purple-500 text-sm font-semibold px-4 py-2 rounded-full transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-user text-purple-400"></i> <span id="auth-nav-text">Mon Compte</span>
+                </button>
+                <button onclick="toggleCart()" class="relative flex items-center gap-2 bg-gray-900 border border-gray-700 hover:border-purple-500 rounded-full py-2 px-5 transition-all">
+                    <i class="fa-solid fa-cart-shopping text-purple-400"></i>
+                    <span class="font-semibold text-white hidden md:inline">Panier</span>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full neon-glow">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN VIEW -->
+    <main id="main-view" class="flex-grow pt-20">
+        
+        <!-- HERO -->
+        <section class="relative py-20 lg:py-32 overflow-hidden flex items-center justify-center">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+            
+            <div class="container mx-auto px-4 text-center relative z-10">
+                <div class="inline-block px-4 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 font-medium text-sm mb-6 backdrop-blur-sm">
+                    <i class="fa-solid fa-location-dot mr-2"></i> Dordogne | Instagram & TikTok @localpulse33[span_0](start_span)[span_0](end_span)
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">
+                    Propulsez votre marque avec <br class="hidden md:block"/>
+                    l'IA & la <span class="text-gradient">Vidéo Virale</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+                    Agence digitale spécialisée dans le montage vertical, la retouche photo et l'intégration d'avatars IA en Dordogne[span_1](start_span)[span_1](end_span).
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#tarifs" class="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold text-lg py-4 px-8 rounded-full neon-glow hover:scale-105 transition-transform">
+                        Découvrir nos offres <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING SECTION -->
+        <section id="tarifs" class="py-20 relative z-10">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4">Nos <span class="text-purple-400">Packs & Formules</span></h2>
+                    <p class="text-gray-400">Tarifs officiels synchronisés avec vos liens de paiement sécurisés.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                    
+                    <!-- Pack Starter (149€) -->
+                    <div class="bg-gray-900/80 backdrop-blur rounded-2xl p-8 border border-gray-800 hover:border-purple-500 transition-all flex flex-col relative group">
+                        <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">STARTER</div>
+                        <h3 class="text-2xl font-bold mb-2">Pack Starter</h3>
+                        <div class="text-4xl font-black text-white mb-6">149 €</div>
+                        <ul class="space-y-4 mb-8 flex-grow text-gray-300">
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-purple-500 mt-1"></i> 3 Vidéos HD 9:16</li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-purple-500 mt-1"></i> 5 Photos Retouchées Studio</li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-purple-500 mt-1"></i> Optimisation IA incluse</li>
+                        </ul>
+                        <button onclick="addToCart('pack_starter', 149, 'Pack Starter', 'fa-box')" class="w-full py-3 rounded-xl bg-gray-800 text-white font-semibold group-hover:bg-purple-600 group-hover:neon-glow transition-all">
+                            Ajouter au Panier
+                        </button>
+                    </div>
+
+                    <!-- Booster Viral (549.99€) -->
+                    <div class="bg-gray-900/80 backdrop-blur rounded-2xl p-8 border-2 border-purple-500 neon-glow relative flex flex-col transform md:-translate-y-4">
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-bold px-4 py-1 rounded-full">POPULAIRE</div>
+                        <h3 class="text-2xl font-bold mb-2 mt-2">Booster Viral</h3>
+                        <div class="text-4xl font-black text-white mb-6">549,99 €</div>
+                        <ul class="space-y-4 mb-8 flex-grow text-gray-300">
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-purple-500 mt-1"></i> 8 Vidéos HD dynamiques</li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-purple-500 mt-1"></i> 15 Photos Retouchées Pro</li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-purple-500 mt-1"></i> Avatars & Voix off IA intégrés</li>
+                        </ul>
+                        <button onclick="addToCart('booster_viral', 549.99, 'Booster Viral', 'fa-rocket')" class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold hover:scale-[1.02] transition-transform shadow-lg">
+                            Ajouter au Panier
+                        </button>
+                    </div>
+
+                    <!-- Dominance IA (689.99€) -->
+                    <div class="bg-gray-900/80 backdrop-blur rounded-2xl p-8 border border-gray-800 hover:border-purple-500 transition-all flex flex-col group">
+                        <h3 class="text-2xl font-bold mb-2">Dominance IA</h3>
+                        <div class="text-4xl font-black text-white mb-6">689,99 €</div>
+                        <ul class="space-y-4 mb-8 flex-grow text-gray-300">
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-purple-500 mt-1"></i> 12 Vidéos Ultra HD</li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-purple-500 mt-1"></i> Pack Avatars IA & Scripts Avancés</li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-purple-500 mt-1"></i> Stratégie virale complète</li>
+                        </ul>
+                        <button onclick="addToCart('dominance_ia', 689.99, 'Dominance IA', 'fa-robot')" class="w-full py-3 rounded-xl bg-gray-800 text-white font-semibold group-hover:bg-purple-600 group-hover:neon-glow transition-all">
+                            Ajouter au Panier
+                        </button>
+                    </div>
+
+                    <!-- Formule Photo (10€ unité) -->
+                    <div class="bg-gray-900/50 backdrop-blur rounded-2xl p-6 border border-gray-800 hover:border-blue-500 transition-all flex flex-col group">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold">Photo Unité</h3>
+                            <span class="text-2xl font-black text-blue-400">10 €</span>
+                        </div>
+                        <p class="text-gray-400 mb-6 flex-grow">Retouche photo studio unitaire avec amélioration IA.</p>
+                        <button onclick="addToCart('formule_photo', 10, 'Formule Photo Unité', 'fa-camera')" class="w-full py-2 rounded-lg border border-gray-700 text-gray-300 group-hover:border-blue-500 group-hover:text-blue-400 transition-colors">
+                            Ajouter au Panier
+                        </button>
+                    </div>
+
+                    <!-- Formule Vidéo (50€ unité avec IA) -->
+                    <div class="bg-gray-900/50 backdrop-blur rounded-2xl p-6 border border-gray-800 hover:border-pink-500 transition-all flex flex-col group md:col-span-2">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold">Vidéo Unité <span class="text-xs text-purple-400 font-normal ml-2">(Option IA & Avatar incluse)</span></h3>
+                            <span class="text-2xl font-black text-pink-400">50 €</span>
+                        </div>
+                        <p class="text-gray-400 mb-6 flex-grow">Montage vidéo vertical 9:16, sound design, sous-titres dynamiques, avec intégration d'avatar et voix off IA.</p>
+                        <button onclick="addToCart('formule_video', 50, 'Formule Vidéo Unité (IA)', 'fa-video')" class="w-full py-2 rounded-lg border border-gray-700 text-gray-300 group-hover:border-pink-500 group-hover:text-pink-400 transition-colors">
+                            Ajouter au Panier
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-gray-950 border-t border-gray-900 py-12 px-4 mt-20">
+            <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                        <i class="fa-solid fa-bolt text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-black text-white">LOCAL<span class="text-gradient">PULSE</span></span>
+                </div>
+                <div class="text-gray-400 text-sm text-center">
+                    © 2026 LocalPulse Digital - Dordogne[span_2](start_span)[span_2](end_span). Contact : <a href="mailto:local+33@outlook.com" class="text-purple-400 underline">local+33@outlook.com</a>
+                </div>
+                <div class="flex items-center gap-4 text-gray-400">
+                    <a href="https://instagram.com/localpulse33" target="_blank" class="hover:text-pink-400 transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                    <a href="https://tiktok.com/@localpulse33" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-tiktok text-xl"></i></a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ADMIN VIEW -->
+    <main id="admin-view" class="hidden flex-grow pt-28 pb-12 px-4 container mx-auto">
+        <div class="max-w-4xl mx-auto bg-gray-900 border border-gray-800 rounded-2xl p-8">
+            <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
+                <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-gauge text-purple-500 mr-2"></i> Dashboard Administrateur</h2>
+                <button onclick="toggleAdminView()" class="text-gray-400 hover:text-white border border-gray-700 px-4 py-2 rounded-lg text-sm">Retour au site</button>
+            </div>
+            
+            <div id="admin-login-box" class="max-w-md mx-auto py-8">
+                <p class="text-sm text-gray-400 mb-4 text-center">Entrez le mot de passe admin :</p>
+                <input type="password" id="admin-pwd-input" placeholder="Mot de passe" class="w-full bg-gray-950 border border-gray-700 rounded-lg px-4 py-3 text-white mb-4">
+                <button onclick="loginAdmin()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-lg">Connexion</button>
+            </div>
+
+            <div id="admin-content-box" class="hidden space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-gray-950 p-6 rounded-xl border border-gray-800">
+                        <span class="text-xs text-gray-400 uppercase font-semibold">Chiffre d'Affaires</span>
+                        <div class="text-3xl font-black text-green-400 mt-2" id="admin-total-rev">0 €</div>
+                    </div>
+                    <div class="bg-gray-950 p-6 rounded-xl border border-gray-800">
+                        <span class="text-xs text-gray-400 uppercase font-semibold">Réception E-mails</span>
+                        <div class="text-sm font-bold text-blue-400 mt-2">local+33@outlook.com</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-3">Commandes & Inscriptions Récentes</h3>
+                    <div class="bg-gray-950 rounded-xl overflow-hidden border border-gray-800 p-4 text-sm text-gray-300 space-y-2" id="admin-orders-list">
+                        Aucune commande enregistrée.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- AUTH MODAL -->
+    <div id="auth-modal" class="fixed inset-0 z-[120] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="toggleAuthModal()"></div>
+        <div class="relative bg-gray-900 border border-gray-700 rounded-2xl w-full max-w-md p-8 neon-glow z-10">
+            <button onclick="toggleAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            
+            <div id="auth-view-login">
+                <h3 class="text-2xl font-bold mb-2 text-white">Espace Client</h3>
+                <p class="text-gray-400 text-sm mb-6">Connectez-vous pour vos commandes.</p>
+                <form onsubmit="handleLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Email</label>
+                        <input type="email" id="login-email" required placeholder="votre@email.com" class="w-full bg-gray-950 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Mot de passe</label>
+                        <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-gray-950 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500">
+                    </div>
+                    <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-lg transition-all">Se connecter</button>
+                </form>
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-400">Pas de compte ? <button onclick="switchAuthMode('register')" class="text-purple-400 hover:underline font-semibold">Créer un compte</button></p>
+                </div>
+            </div>
+
+            <div id="auth-view-register" class="hidden">
+                <h3 class="text-2xl font-bold mb-2 text-white">Créer un compte</h3>
+                <p class="text-gray-400 text-sm mb-4">Votre demande sera transmise vers <strong class="text-purple-300">local+33@outlook.com</strong>.</p>
+                
+                <form onsubmit="handleRegister(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Nom / Société</label>
+                        <input type="text" id="reg-name" required placeholder="Mon Entreprise" class="w-full bg-gray-950 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1">Adresse Email</label>
+                        <input type="email" id="reg-email" required placeholder="votre@email.com" class="w-full bg-gray-950 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500">
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 rounded-lg transition-all">S'inscrire & Valider</button>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-400">Déjà un compte ? <button onclick="switchAuthMode('login')" class="text-purple-400 hover:underline font-semibold">Se connecter</button></p>
+                </div>
+            </div>
+
+            <div id="auth-view-logged" class="hidden text-center py-4">
+                <div class="w-16 h-16 bg-green-500/25 border border-green-500/40 rounded-full flex items-center justify-center mx-auto mb-4 text-green-400 text-2xl">
+                    <i class="fa-solid fa-user-check"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-1" id="logged-user-name">Mon Compte</h3>
+                <p class="text-gray-400 text-sm mb-6" id="logged-user-email">email@domain.com</p>
+                <button onclick="handleLogout()" class="w-full bg-red-600/20 border border-red-500/30 text-red-400 hover:bg-red-600 hover:text-white font-bold py-3 rounded-lg transition-all">Se déconnecter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART SLIDE OVER -->
+    <div id="cart-overlay" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleCart()"></div>
+        <div class="absolute top-0 right-0 h-full w-full max-w-md bg-gray-900 border-l border-gray-800 shadow-2xl flex flex-col transform transition-transform duration-300 translate-x-full" id="cart-panel">
+            
+            <div class="p-6 border-b border-gray-800 flex items-center justify-between bg-gray-950">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-purple-500"></i> Votre Panier
+                </h2>
+                <button onclick="toggleCart()" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="flex-grow overflow-y-auto p-6 space-y-4" id="cart-items-container">
+                <div class="text-center text-gray-500 py-10" id="empty-cart-msg">
+                    <i class="fa-solid fa-cart-arrow-down text-4xl mb-4 text-gray-700"></i>
+                    <p>Votre panier est vide.</p>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 bg-gray-950 p-6 space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-400 font-medium">Total :</span>
+                    <span class="text-3xl font-black text-white" id="cart-total-price">0 €</span>
+                </div>
+
+                <div id="checkout-section">
+                    <h3 class="text-xs font-semibold text-purple-400 uppercase tracking-wider mb-2">Mode de paiement</h3>
+                    
+                    <div class="space-y-2 mb-4">
+                        <label class="flex items-center gap-3 p-3 bg-gray-900 border border-gray-700 rounded-lg cursor-pointer hover:border-purple-500">
+                            <input type="radio" name="payment_method" value="stripe" checked class="text-purple-600">
+                            <div>
+                                <strong class="block text-white text-sm"><i class="fa-brands fa-stripe text-blue-400 mr-1"></i> Carte Bancaire (Stripe)</strong>
+                                <span class="text-xs text-gray-400">Paiement sécurisé instantané</span>
+                            </div>
+                        </label>
+                        
+                        <label class="flex items-center gap-3 p-3 bg-gray-900 border border-gray-700 rounded-lg cursor-pointer hover:border-purple-500">
+                            <input type="radio" name="payment_method" value="transfer" class="text-purple-600">
+                            <div>
+                                <strong class="block text-white text-sm"><i class="fa-solid fa-building-columns text-green-400 mr-1"></i> Virement Bancaire</strong>
+                                <span class="text-xs text-gray-400">Affichage de votre RIB</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div id="bank-transfer-box" class="hidden bg-gray-900 p-4 rounded-xl border border-gray-700 text-xs space-y-1 mb-4">
+                        <p class="font-bold text-green-400 mb-2"><i class="fa-solid fa-info-circle"></i> Coordonnées Bancaires (RIB) :</p>
+                        <p class="text-gray-300">Banque : <strong>Crédit Agricole</strong></p>
+                        <p class="text-gray-300 font-mono">IBAN : FR76 XXXX XXXX XXXX XXXX XXXX XXX</p>
+                        <p class="text-gray-300">BIC / SWIFT : XXXXFRXX</p>
+                        <p class="text-gray-500 mt-2">Envoyez la preuve à <strong>local+33@outlook.com</strong></p>
+                    </div>
+
+                    <button onclick="proceedToCheckout()" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-purple-500/25 transition-all">
+                        Procéder au Paiement
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHATBOT WIDGET -->
+    <div class="fixed bottom-6 right-6 z-40">
+        <div id="chat-window" class="hidden w-80 bg-gray-900 border border-gray-700 rounded-2xl shadow-2xl mb-4 overflow-hidden flex flex-col">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-4 flex justify-between items-center text-white">
+                <span class="font-bold text-sm"><i class="fa-solid fa-robot mr-1"></i> Assistant LocalPulse</span>
+                <button onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-3 h-48 overflow-y-auto text-xs space-y-2 bg-gray-950 text-gray-300" id="chat-messages">
+                <div class="bg-gray-800 p-2.5 rounded-lg">Bonjour ! Bienvenue sur LocalPulse Digital. Comment pouvons-nous vous aider aujourd'hui ? (Instagram / TikTok : @localpulse33)[span_3](start_span)[span_3](end_span)</div>
+            </div>
+            <div class="p-2 bg-gray-900 border-t border-gray-800 flex gap-2">
+                <input type="text" id="chat-input" placeholder="Posez votre question..." class="flex-grow bg-gray-950 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none">
+                <button onclick="sendChatMessage()" class="bg-purple-600 text-white px-3 py-2 rounded-lg text-xs"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <button onclick="toggleChat()" class="w-14 h-14 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-all">
+            <i class="fa-solid fa-comments text-white text-xl"></i>
+        </button>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[130] flex flex-col gap-2"></div>
+
+    <script>
+        const stripeLinks = {
+            'pack_starter': 'https://buy.stripe.com/7sY00j0O22RQ0CY1qF38403',
+            'formule_photo': 'https://buy.stripe.com/eVq9ATfIW786clG5GV38401',
+            'formule_video': 'https://buy.stripe.com/3cI9ATdAO3VU0CY5GV38404',
+            'booster_viral': 'https://buy.stripe.com/dRm14nfIW8caetOb1f38405',
+            'dominance_ia': 'https://buy.stripe.com/7sY00j0O22RQ0CY1qF38403'
+        };
+
+        let cart = [];
+        let currentUser = JSON.parse(localStorage.getItem('localpulse_current_user') || 'null');
+        updateAuthUI();
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const colorClass = type === 'success' ? 'border-green-500 bg-green-500/10 text-green-400' : 'border-red-500 bg-red-500/10 text-red-400';
+            toast.className = `flex items-center gap-3 px-6 py-3 rounded-full border backdrop-blur-md shadow-lg toast-animate ${colorClass}`;
+            toast.innerHTML = `<i class="fa-solid fa-check-circle"></i> <span class="font-medium text-sm">${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function showMainView() {
+            document.getElementById('main-view').classList.remove('hidden');
+            document.getElementById('admin-view').classList.add('hidden');
+            window.scrollTo(0,0);
+        }
+
+        function toggleAdminView() {
+            const adminView = document.getElementById('admin-view');
+            const mainView = document.getElementById('main-view');
+            if(adminView.classList.contains('hidden')) {
+                mainView.classList.add('hidden');
+                adminView.classList.remove('hidden');
+            } else {
+                showMainView();
+            }
+        }
+
+        function loginAdmin() {
+            const pwd = document.getElementById('admin-pwd-input').value;
+            if(pwd.length > 0) {
+                document.getElementById('admin-login-box').classList.add('hidden');
+                document.getElementById('admin-content-box').classList.remove('hidden');
+                loadAdminStats();
+            } else {
+                showToast("Mot de passe requis", "error");
+            }
+        }
+
+        function loadAdminStats() {
+            const orders = JSON.parse(localStorage.getItem('localpulse_orders') || '[]');
+            let totalRev = 0;
+            let listHtml = '';
+            if(orders.length === 0) {
+                listHtml = '<p class="text-gray-500">Aucune commande pour le moment.</p>';
+            } else {
+                orders.forEach(o => {
+                    totalRev += o.total;
+                    listHtml += `<div class="p-3 bg-gray-900 rounded-lg border border-gray-800 flex justify-between items-center"><div><strong class="text-white">${o.name}</strong> (${o.email})<div class="text-xs text-gray-400">${o.date}</div></div><strong class="text-green-400">${o.total} €</strong></div>`;
+                });
+            }
+            document.getElementById('admin-total-rev').innerText = `${totalRev.toFixed(2)} €`;
+            document.getElementById('admin-orders-list').innerHTML = listHtml;
+        }
+
+        function toggleAuthModal() {
+            document.getElementById('auth-modal').classList.toggle('hidden');
+        }
+
+        function switchAuthMode(mode) {
+            if(mode === 'register') {
+                document.getElementById('auth-view-login').classList.add('hidden');
+                document.getElementById('auth-view-register').classList.remove('hidden');
+            } else {
+                document.getElementById('auth-view-register').classList.add('hidden');
+                document.getElementById('auth-view-login').classList.remove('hidden');
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            currentUser = { name, email };
+            localStorage.setItem('localpulse_current_user', JSON.stringify(currentUser));
+            updateAuthUI();
+            toggleAuthModal();
+            showToast("Compte créé avec succès ! Notification envoyée à local+33@outlook.com");
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            currentUser = { name: email.split('@')[0], email };
+            localStorage.setItem('localpulse_current_user', JSON.stringify(currentUser));
+            updateAuthUI();
+            toggleAuthModal();
+            showToast("Connexion réussie !");
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            localStorage.removeItem('localpulse_current_user');
+            updateAuthUI();
+            toggleAuthModal();
+            showToast("Déconnexion réussie");
+        }
+
+        function updateAuthUI() {
+            const btnText = document.getElementById('auth-nav-text');
+            if(currentUser) {
+                btnText.innerText = currentUser.name;
+                document.getElementById('auth-view-login').classList.add('hidden');
+                document.getElementById('auth-view-register').classList.add('hidden');
+                document.getElementById('auth-view-logged').classList.remove('hidden');
+                document.getElementById('logged-user-name').innerText = currentUser.name;
+                document.getElementById('logged-user-email').innerText = currentUser.email;
+            } else {
+                btnText.innerText = "Mon Compte";
+                document.getElementById('auth-view-logged').classList.add('hidden');
+                document.getElementById('auth-view-login').classList.remove('hidden');
+            }
+        }
+
+        function toggleCart() {
+            const overlay = document.getElementById('cart-overlay');
+            const panel = document.getElementById('cart-panel');
+            if (overlay.classList.contains('hidden')) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => panel.classList.remove('translate-x-full'), 10);
+                updateCartUI();
+            } else {
+                panel.classList.add('translate-x-full');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        function addToCart(id, price, name, icon) {
+            const existing = cart.find(i => i.id === id);
+            if(existing) existing.quantity += 1;
+            else cart.push({ id, price, name, icon, quantity: 1 });
+            updateCartUI();
+            showToast(`${name} ajouté au panier`);
+        }
+
+        function updateQuantity(id, delta) {
+            const index = cart.findIndex(i => i.id === id);
+            if(index !== -1) {
+                cart[index].quantity += delta;
+                if(cart[index].quantity <= 0) cart.splice(index, 1);
+                updateCartUI();
+            }
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const emptyMsg = document.getElementById('empty-cart-msg');
+            const countBadge = document.getElementById('cart-count');
+            const priceLabel = document.getElementById('cart-total-price');
+            
+            container.innerHTML = '';
+            let total = 0, count = 0;
+
+            if(cart.length === 0) {
+                container.appendChild(emptyMsg);
+                emptyMsg.style.display = 'block';
+            } else {
+                emptyMsg.style.display = 'none';
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                    count += item.quantity;
+                    const el = document.createElement('div');
+                    el.className = 'bg-gray-800/50 border border-gray-700 rounded-xl p-4 flex gap-4 items-center';
+                    el.innerHTML = `
+                        <div class="w-12 h-12 rounded-lg bg-gray-900 flex items-center justify-center border border-gray-700"><i class="fa-solid ${item.icon} text-purple-400"></i></div>
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-white text-sm">${item.name}</h4>
+                            <div class="text-gray-400 text-xs">${item.price} € x ${item.quantity}</div>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-900 rounded-lg p-1 border border-gray-700">
+                            <button onclick="updateQuantity('${item.id}', -1)" class="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-white"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <span class="text-sm font-bold w-4 text-center text-white">${item.quantity}</span>
+                            <button onclick="updateQuantity('${item.id}', 1)" class="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-white"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                    `;
+                    container.appendChild(el);
+                });
+            }
+            countBadge.innerText = count;
+            priceLabel.innerText = `${total.toFixed(2)} €`;
+        }
+
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const box = document.getElementById('bank-transfer-box');
+                if(this.value === 'transfer') box.classList.remove('hidden');
+                else box.classList.add('hidden');
+            });
+        });
+
+        function proceedToCheckout() {
+            if(cart.length === 0) {
+                showToast("Votre panier est vide", "error");
+                return;
+            }
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const orders = JSON.parse(localStorage.getItem('localpulse_orders') || '[]');
+            orders.push({
+                date: new Date().toLocaleDateString('fr-FR'),
+                name: currentUser ? currentUser.name : 'Client',
+                email: currentUser ? currentUser.email : 'local+33@outlook.com',
+                total: total,
+                items: [...cart]
+            });
+            localStorage.setItem('localpulse_orders', JSON.stringify(orders));
+
+            const selectedMethod = document.querySelector('input[name="payment_method"]:checked').value;
+            if(selectedMethod === 'stripe') {
+                const primaryItem = cart[0].id;
+                const link = stripeLinks[primaryItem] || 'https://buy.stripe.com/7sY00j0O22RQ0CY1qF38403';
+                showToast("Redirection vers Stripe...");
+                setTimeout(() => window.location.href = link, 1200);
+            } else {
+                showToast("Commande validée. Notification envoyée à local+33@outlook.com");
+                setTimeout(() => { cart = []; updateCartUI(); toggleCart(); }, 2000);
+            }
+        }
+
+        function toggleChat() {
+            const win = document.getElementById('chat-window');
+            win.classList.toggle('hidden');
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const val = input.value.trim();
+            if(!val) return;
+            const container = document.getElementById('chat-messages');
+            container.innerHTML += `<div class="bg-blue-600 text-white p-2 rounded-lg text-right">${val}</div>`;
+            input.value = '';
+            setTimeout(() => {
+                container.innerHTML += `<div class="bg-gray-800 p-2 rounded-lg">Merci pour votre message ! Retrouvez-nous sur Instagram et TikTok @localpulse33[span_4](start_span)[span_4](end_span) ou écrivez-nous à local+33@outlook.com</div>`;
+                container.scrollTop = container.scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
